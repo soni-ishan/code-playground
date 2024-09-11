@@ -1,0 +1,9 @@
+#include <iostream>
+#include "header.h"
+using namespace std;
+
+int main()
+{
+    cout << infix_to_prefix("( 1 + 2 ) * ( 3 - 4 )");
+    return 0;
+}
