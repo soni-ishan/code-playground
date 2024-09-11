@@ -106,13 +106,13 @@ string infix_to_prefix(string exp)
         }
         catch (const invalid_argument &e)
         {
-            if (exp_list[i] == "(")
+            if (exp_list[i] == ")")
             {
                 st.push(exp_list[i]);
             }
-            else if (exp_list[i] == ")")
+            else if (exp_list[i] == "(")
             {
-                while (!st.empty() && st.top() != "(")
+                while (!st.empty() && st.top() != ")")
                 {
                     prefix += st.top() + " ";
                     st.pop();
@@ -124,7 +124,7 @@ string infix_to_prefix(string exp)
             }
             else
             {
-                while (!st.empty() && (precedence(st.top()) <= precedence(exp_list[i])))
+                while (!st.empty() && (precedence(st.top()) > precedence(exp_list[i])))
                 {
                     prefix += st.top() + " ";
                     st.pop();
@@ -139,5 +139,6 @@ string infix_to_prefix(string exp)
         st.pop();
     }
     string result = prefix.substr(0, prefix.length() - 1);
-    return result;
+    string reverse_result(result.rbegin(), result.rend());
+    return reverse_result;
 }
