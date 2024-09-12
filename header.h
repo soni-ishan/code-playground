@@ -51,7 +51,7 @@ string infix_to_postfix(string exp)
     {
         try
         {
-            int num = stoi(exp_list[i]);
+            int operand = stoi(exp_list[i]);
             postfix += exp_list[i] + " ";
         }
         catch (const invalid_argument &e)
@@ -101,7 +101,7 @@ string infix_to_prefix(string exp)
     {
         try
         {
-            int num = stoi(exp_list[i]);
+            int operand = stoi(exp_list[i]);
             prefix += exp_list[i] + " ";
         }
         catch (const invalid_argument &e)
@@ -139,6 +139,34 @@ string infix_to_prefix(string exp)
         st.pop();
     }
     string result = prefix.substr(0, prefix.length() - 1);
+    string reverse_result(result.rbegin(), result.rend());
+    return reverse_result;
+}
+
+string postfix_to_infix(string exp)
+{
+    vector<string> exp_list = string_to_list(exp);
+    stack<string> st;
+    string infix = "";
+    for (int i = 0; i < exp_list.size(); i++)
+    {
+        try
+        {
+            int operand = stoi(exp_list[i]);
+            st.push(exp_list[i]);
+        }
+        catch (const invalid_argument &e)
+        {
+            string first_operand = st.top();
+            st.pop();
+            string second_operand = st.top();
+            st.pop();
+            string temp = first_operand + " " + exp_list[i] + " " + second_operand;
+            st.push(temp);
+        }
+    }
+    string result = st.top();
+    st.pop();
     string reverse_result(result.rbegin(), result.rend());
     return reverse_result;
 }

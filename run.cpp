@@ -4,6 +4,7 @@ using namespace std;
 
 int main()
 {
-    cout << infix_to_prefix("( 4 + 8 ) * ( 6 - 5 ) / ( 3 - 2 ) * ( 2 + 2 )") << endl;
+    cout << infix_to_prefix("13 + 24 * 35") << endl;
+    // cout << postfix_to_infix("13 24 35 * 46 / +") << endl;
     return 0;
 }
