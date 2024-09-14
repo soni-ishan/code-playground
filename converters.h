@@ -1,3 +1,6 @@
+#ifndef CONVERTERS_H
+#define CONVERTERS_H
+#pragma once
 #include <iostream>
 #include <stack>
 #include <vector>
@@ -207,3 +210,5 @@ string postfix_to_prefix(string exp)
     st.pop();
     return result;
 }
+
+#endif

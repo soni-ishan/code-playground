@@ -1,3 +1,6 @@
+#ifndef ERRORHANDLERS_H
+#define ERRORHANDLERS_H
+#pragma once
 #include <iostream>
 using namespace std;
 
@@ -37,3 +40,5 @@ bool check_input_validity(string exp)
 {
     return (check_char_validity(exp) && equal_brackets(exp));
 }
+
+#endif
