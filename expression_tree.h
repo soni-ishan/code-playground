@@ -5,6 +5,8 @@
 #include "converters.h"
 using namespace std;
 
+// Node class to represent individual nodes/elements
+// like numbers and operators in an expression tree
 class Node
 {
 private:
@@ -19,6 +21,8 @@ public:
     Node(string, Node *, Node *);
 };
 
+// Tree class to link all the nodes/elements of an
+// expression in the form of an expression tree
 class Tree
 {
 private:
@@ -32,6 +36,7 @@ public:
     void postorder(Node *) const;
 };
 
+// Node constructor using parameters
 Node::Node(string newdata, Node *leftptr, Node *rightptr)
     : data(newdata),
       left(leftptr),
@@ -39,6 +44,7 @@ Node::Node(string newdata, Node *leftptr, Node *rightptr)
 {
 }
 
+// Tree constructor using postfix expression
 Tree::Tree(string postfix_exp)
 {
     vector<string> exp_list = string_to_list(postfix_exp);
@@ -73,6 +79,7 @@ Tree::Tree(string postfix_exp)
     }
 }
 
+// Function to print expression tree in preorder form
 void Tree::preorder(Node *node) const
 {
     if (node != NULL)
@@ -82,6 +89,8 @@ void Tree::preorder(Node *node) const
         preorder(node->right);
     }
 }
+
+// Function to print expression tree in inorder form
 void Tree::inorder(Node *node) const
 {
     if (node != NULL)
@@ -91,6 +100,8 @@ void Tree::inorder(Node *node) const
         inorder(node->right);
     }
 }
+
+// Function to print expression tree in postorder form
 void Tree::postorder(Node *node) const
 {
     if (node != NULL)

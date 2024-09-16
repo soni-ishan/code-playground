@@ -4,6 +4,7 @@
 #include <iostream>
 using namespace std;
 
+// To check if the input characters are valid
 bool check_char_validity(string exp)
 {
     string valid_chars = "1234567890+-*/^() ";
@@ -17,6 +18,8 @@ bool check_char_validity(string exp)
     return 1;
 }
 
+// To check if the number of opening and closing brackets
+// are equal for an infix input
 bool equal_brackets(string exp)
 {
     int open_brackets = 0;
@@ -36,6 +39,8 @@ bool equal_brackets(string exp)
     return (open_brackets == close_brackets);
 }
 
+// master function to run all the error handler
+// functions at once
 bool check_input_validity(string exp)
 {
     return (check_char_validity(exp) && equal_brackets(exp));

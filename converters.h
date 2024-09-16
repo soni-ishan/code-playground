@@ -8,6 +8,7 @@
 #include "error_handlers.h"
 using namespace std;
 
+// Function to check operator precedence
 int precedence(string op)
 {
     if (op == "^")
@@ -25,6 +26,9 @@ int precedence(string op)
     return -1;
 }
 
+// Function to convert the string input to a vector array.
+// This way all the numbers, brackets and operators (except whitespace)
+// will be stored as individual string elements in the array
 vector<string> string_to_list(string s)
 {
     vector<string> result;
@@ -45,6 +49,7 @@ vector<string> string_to_list(string s)
     return result;
 }
 
+// Function to convert the infix expression to postfix
 string infix_to_postfix(string exp)
 {
     vector<string> exp_list = string_to_list(exp);
@@ -95,6 +100,7 @@ string infix_to_postfix(string exp)
     return postfix;
 }
 
+// Function to reverse a string
 string reverse_expression(string exp)
 {
     vector<string> exp_list = string_to_list(exp);
@@ -107,6 +113,7 @@ string reverse_expression(string exp)
     return reversed_exp;
 }
 
+// Function to convert infix expression to prefix
 string infix_to_prefix(string exp)
 {
     vector<string> exp_list = string_to_list(exp);
@@ -158,6 +165,7 @@ string infix_to_prefix(string exp)
     return prefix;
 }
 
+// Function to convert postfix expression to infix
 string postfix_to_infix(string exp)
 {
     vector<string> exp_list = string_to_list(exp);
@@ -185,6 +193,7 @@ string postfix_to_infix(string exp)
     return reverse_result;
 }
 
+// Function to convert postfix expression to prefix
 string postfix_to_prefix(string exp)
 {
     vector<string> exp_list = string_to_list(exp);

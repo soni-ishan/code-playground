@@ -1,9 +1,10 @@
 #include <iostream>
-#include "converters.h"
+#include "expression_tree.h"
 using namespace std;
 
 int main()
 {
-    cout << postfix_to_infix("4 8 + 6 5 - * 3 2 - / 2 2 + *") << endl;
+    Tree test_exp_tree1("-12 13 +");
+    // test_exp_tree1.postorder();
     return 0;
 }
