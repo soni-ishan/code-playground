@@ -4,7 +4,16 @@ using namespace std;
 
 int main()
 {
-    Tree test_exp_tree1("-12 13 +");
-    // test_exp_tree1.postorder();
+    string test_exp = "-12 13 +";
+    Node* test_tree = makeTree(test_exp);
+    cout << "Preorder: ";
+    preorder(test_tree);
+    cout << endl;
+    cout << "Inorder: ";
+    inorder(test_tree);
+    cout << endl;
+    cout << "Postorder: ";
+    postorder(test_tree);
+    cout << endl;
     return 0;
 }

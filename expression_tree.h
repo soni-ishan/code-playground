@@ -19,33 +19,20 @@ public:
     Node() : data(""), left(NULL), right(NULL) {}
     Node(string newdata) : data(newdata), left(NULL), right(NULL) {}
     Node(string, Node *, Node *);
+    string getData() { return data; }
+    Node *goLeft() { return left; }
+    Node *goRight() { return right; }
 };
 
-// Tree class to link all the nodes/elements of an
-// expression in the form of an expression tree
-class Tree
-{
-private:
-    Node *root;
-
-public:
-    Tree() : root(NULL) {}
-    Tree(string);
-    void preorder(Node *) const;
-    void inorder(Node *) const;
-    void postorder(Node *) const;
-};
-
-// Node constructor using parameters
-Node::Node(string newdata, Node *leftptr, Node *rightptr)
-    : data(newdata),
+Node::Node(string newData, Node *leftptr, Node *rightptr)
+    : data(newData),
       left(leftptr),
       right(rightptr)
 {
 }
 
-// Tree constructor using postfix expression
-Tree::Tree(string postfix_exp)
+// Function to make expression tree from postfix expression
+Node *makeTree(string postfix_exp)
 {
     vector<string> exp_list = string_to_list(postfix_exp);
     stack<Node *> st;
@@ -59,10 +46,9 @@ Tree::Tree(string postfix_exp)
         }
         catch (const invalid_argument &e)
         {
-            string node_head = exp_list[i];
-            Node *left_node = st.top();
-            st.pop();
             Node *right_node = st.top();
+            st.pop();
+            Node *left_node = st.top();
             st.pop();
             Node *sub_tree = new Node(exp_list[i], left_node, right_node);
             st.push(sub_tree);
@@ -70,46 +56,76 @@ Tree::Tree(string postfix_exp)
     }
     if (!st.empty())
     {
-        root = st.top();
+        Node *root = st.top();
         st.pop();
+        return root;
     }
-    else
-    {
-        root = nullptr;
-    }
+    return NULL;
 }
 
 // Function to print expression tree in preorder form
-void Tree::preorder(Node *node) const
+void preorder(Node *root)
 {
-    if (node != NULL)
+    if (root != NULL)
     {
-        cout << node->data << " ";
-        preorder(node->left);
-        preorder(node->right);
+        cout << root->getData() << " ";
+        preorder(root->goLeft());
+        preorder(root->goRight());
     }
 }
 
 // Function to print expression tree in inorder form
-void Tree::inorder(Node *node) const
+void inorder(Node *root)
 {
-    if (node != NULL)
+    if (root != NULL)
     {
-        inorder(node->left);
-        cout << node->data << " ";
-        inorder(node->right);
+        inorder(root->goLeft());
+        cout << root->getData() << " ";
+        inorder(root->goRight());
     }
 }
 
 // Function to print expression tree in postorder form
-void Tree::postorder(Node *node) const
+void postorder(Node *root)
 {
-    if (node != NULL)
+    if (root != NULL)
     {
-        postorder(node->left);
-        postorder(node->right);
-        cout << node->data << " ";
+        postorder(root->goLeft());
+        postorder(root->goRight());
+        cout << root->getData() << " ";
     }
+}
+
+int evaluate_tree(Node *root)
+{
+    if (root != NULL)
+    {
+        try
+        {
+            int operand = stoi(root->getData());
+            return operand;
+        }
+        catch (const invalid_argument &e)
+        {
+            int left_subtree = evaluate_tree(root->goLeft());
+            int right_subtree = evaluate_tree(root->goRight());
+            string op = root->getData();
+            switch (op[0])
+            {
+            case '+':
+                return right_subtree + left_subtree;
+            case '-':
+                return right_subtree - left_subtree;
+            case '*':
+                return right_subtree * left_subtree;
+            case '/':
+                return right_subtree / left_subtree;
+            default:
+                break;
+            }
+        }
+    }
+    return NULL;
 }
 
 #endif
