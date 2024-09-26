@@ -1,6 +1,3 @@
-#ifndef ERRORHANDLERS_H
-#define ERRORHANDLERS_H
-#pragma once
 #include <iostream>
 using namespace std;
 
@@ -12,10 +9,11 @@ bool check_char_validity(string exp)
     {
         if (valid_chars.find(exp[i]) == string::npos)
         {
-            return 0;
+            cout << "Input string does not contain valid characters...Please try again....." << endl;
+            return false;
         }
     }
-    return 1;
+    return true;
 }
 
 // To check if the number of opening and closing brackets
@@ -36,7 +34,13 @@ bool equal_brackets(string exp)
         close_brackets++;
         pos++;
     }
-    return (open_brackets == close_brackets);
+    if (open_brackets != close_brackets)
+    {
+        cout << "INPUT ERROR!! The number of opening anf closing brackets in your entered infix expression are not the same...";
+        cout << "Please try again....." << endl;
+        return false;
+    }
+    return true;
 }
 
 // master function to run all the error handler
@@ -45,5 +49,3 @@ bool check_input_validity(string exp)
 {
     return (check_char_validity(exp) && equal_brackets(exp));
 }
-
-#endif
