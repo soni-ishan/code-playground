@@ -37,13 +37,15 @@ public:
     void preorder(Node *);
     void inorder(Node *);
     void postorder(Node *);
-    int evaluate_tree(Node *);
+    float evaluate_tree(Node *);
 };
 
 // Converter functions
 int precedence(string);
 vector<string> string_to_list(string);
 string infix_to_postfix(string);
+
+string detect_input_type(string);
 
 // Error handling functions
 bool check_char_validity(string exp);

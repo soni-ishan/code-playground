@@ -200,7 +200,7 @@ void Tree::postorder(Node *rootNode)
     }
 }
 
-int Tree::evaluate_tree(Node *rootNode)
+float Tree::evaluate_tree(Node *rootNode)
 {
     if (rootNode->goLeft() == NULL && rootNode->goRight() == NULL)
     {
@@ -210,7 +210,8 @@ int Tree::evaluate_tree(Node *rootNode)
     {
         Node *left_subtree_root = rootNode->goLeft();
         Node *right_subtree_root = rootNode->goRight();
-        switch (root->getData()[0])
+        char operator_symbol = rootNode->getData()[0];
+        switch (operator_symbol)
         {
         case '+':
             return evaluate_tree(left_subtree_root) + evaluate_tree(right_subtree_root);
@@ -227,37 +228,27 @@ int Tree::evaluate_tree(Node *rootNode)
     }
 }
 
-// int Tree::evaluate_tree(Node *rootNode)
-// {
-//     if (rootNode != NULL)
-//     {
-//         try
-//         {
-//             int operand = stoi(rootNode->getData());
-//             // return operand;
-//         }
-//         catch (const invalid_argument &e)
-//         {
-//             int left_subtree = evaluate_tree(rootNode->goLeft());
-//             int right_subtree = evaluate_tree(rootNode->goRight());
-//             string op = rootNode->getData();
-//             switch (op[0])
-//             {
-//             case '+':
-//                 return right_subtree + left_subtree;
-//             case '-':
-//                 return right_subtree - left_subtree;
-//             case '*':
-//                 return right_subtree * left_subtree;
-//             case '/':
-//                 return right_subtree / left_subtree;
-//             default:
-//                 break;
-//             }
-//         }
-//     }
-//     return 0;
-// }
+string detect_input_type(string input_exp)
+{
+    // assuming user entered valid prefix/infix/postfix expression as input
+    vector<string> exp_list = string_to_list(input_exp);
+    string operators = "+-*/";
+    size_t isPrefix = operators.find(exp_list[0]);
+    int exp_len = exp_list.size();
+    size_t isPostfix = operators.find(exp_list[exp_len - 1]);
+    if (isPrefix != string::npos)
+    {
+        return "prefix";
+    }
+    else if (isPostfix != string::npos)
+    {
+        return "postfix";
+    }
+    else
+    {
+        return "infix";
+    }
+}
 
 // To check if the input characters are valid
 bool check_char_validity(string exp)
