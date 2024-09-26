@@ -1,7 +1,10 @@
-#ifndef EXPRESSIONTREE_H
-#define EXPRESSIONTREE_H
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 #pragma once
 #include <iostream>
+#include <stack>
+#include <vector>
+#include <string>
 using namespace std;
 
 // Node class to represent individual nodes/elements
@@ -31,6 +34,20 @@ private:
 public:
     Tree(string);
     Node *getRoot();
+    void preorder(Node *);
+    void inorder(Node *);
+    void postorder(Node *);
+    int evaluate_tree(Node *);
 };
+
+// Converter functions
+int precedence(string);
+vector<string> string_to_list(string);
+string infix_to_postfix(string);
+
+// Error handling functions
+bool check_char_validity(string exp);
+bool equal_brackets(string exp);
+bool check_input_validity(string exp);
 
 #endif
