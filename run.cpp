@@ -4,14 +4,19 @@ using namespace std;
 
 int main()
 {
-    string input_exp1 = "-12 + 13";
-    string input_exp2 = "13 + 24 * 35 / 46";
-    string input_exp3 = "( 4 + 8 ) * ( 6 - 5 ) / ( 3 - 2 ) * ( 2 + 2 )";
-    string input_exp4 = "( ( ( ( 1 * ( 2 + 3 ) ) - 3 ) + 4 ) * 5 )";
-    // cout << "Enter infix expression: " << endl;
-    // cin >> input_exp;
+    string input;
+    do
+    {
+        cout << "Enter expresion: ";
+        getline(cin, input);
+    } while (!check_input_validity(input));  
 
-    string postfix_exp = infix_to_postfix(input_exp4);
+    string input_type = detect_input_type(input);
+    string postfix_exp;
+    if (input_type == "infix")
+    {
+        postfix_exp = infix_to_postfix(input);
+    }
     Tree *exp_tree = new Tree(postfix_exp);
 
     cout << "Preorder/Prefix expression: ";

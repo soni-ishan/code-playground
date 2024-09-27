@@ -104,13 +104,17 @@ vector<string> string_to_list(string s)
         {
             vector_element += s[i];
         }
-        else
+        else if (vector_element != "")
         {
             result.push_back(vector_element);
+            // cout << "Pushed: " << vector_element << endl;
             vector_element = "";
         }
     }
-    result.push_back(vector_element);
+    if (vector_element != "")
+    {
+        result.push_back(vector_element);
+    }
     return result;
 }
 
@@ -165,6 +169,54 @@ string infix_to_postfix(string exp)
     return postfix;
 }
 
+bool isPrefix(string exp)
+{
+    vector<string> exp_list = string_to_list(exp);
+    string target = exp_list[0];
+    try
+    {
+        int operand = stoi(target);
+    }
+    catch (const invalid_argument &e)
+    {
+        if (target != "(" && target != ")")
+        {
+            return true;
+        }
+    }
+    return false;
+}
+bool isPostfix(string exp)
+{
+    vector<string> exp_list = string_to_list(exp);
+    string target = exp_list[exp_list.size() - 1];
+    try
+    {
+        int operand = stoi(target);
+    }
+    catch (const invalid_argument &e)
+    {
+        if (target != "(" && target != ")")
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+string detect_input_type(string exp)
+{
+    if (isPrefix(exp))
+    {
+        return "prefix";
+    }
+    else if (isPostfix(exp))
+    {
+        return "postfix";
+    }
+    return "infix";
+}
+
 // Function to print expression tree in preorder form
 void Tree::preorder(Node *rootNode)
 {
@@ -200,7 +252,7 @@ void Tree::postorder(Node *rootNode)
     }
 }
 
-int Tree::evaluate_tree(Node *rootNode)
+float Tree::evaluate_tree(Node *rootNode)
 {
     if (rootNode->goLeft() == NULL && rootNode->goRight() == NULL)
     {
@@ -210,7 +262,8 @@ int Tree::evaluate_tree(Node *rootNode)
     {
         Node *left_subtree_root = rootNode->goLeft();
         Node *right_subtree_root = rootNode->goRight();
-        switch (root->getData()[0])
+        char operator_symbol = rootNode->getData()[0];
+        switch (operator_symbol)
         {
         case '+':
             return evaluate_tree(left_subtree_root) + evaluate_tree(right_subtree_root);
@@ -227,47 +280,15 @@ int Tree::evaluate_tree(Node *rootNode)
     }
 }
 
-// int Tree::evaluate_tree(Node *rootNode)
-// {
-//     if (rootNode != NULL)
-//     {
-//         try
-//         {
-//             int operand = stoi(rootNode->getData());
-//             // return operand;
-//         }
-//         catch (const invalid_argument &e)
-//         {
-//             int left_subtree = evaluate_tree(rootNode->goLeft());
-//             int right_subtree = evaluate_tree(rootNode->goRight());
-//             string op = rootNode->getData();
-//             switch (op[0])
-//             {
-//             case '+':
-//                 return right_subtree + left_subtree;
-//             case '-':
-//                 return right_subtree - left_subtree;
-//             case '*':
-//                 return right_subtree * left_subtree;
-//             case '/':
-//                 return right_subtree / left_subtree;
-//             default:
-//                 break;
-//             }
-//         }
-//     }
-//     return 0;
-// }
-
 // To check if the input characters are valid
-bool check_char_validity(string exp)
+bool check_symbol_validity(string exp)
 {
     string valid_chars = "1234567890+-*/^() ";
     for (int i = 0; i < exp.length(); i++)
     {
         if (valid_chars.find(exp[i]) == string::npos)
         {
-            cout << "Input string does not contain valid characters...Please try again....." << endl;
+            cout << "Unknown symbol in input...Please try again....." << endl;
             return false;
         }
     }
@@ -301,9 +322,39 @@ bool equal_brackets(string exp)
     return true;
 }
 
+// in any valid arithmetic expression, number of operands is one more than the number of operators
+bool operator_operand_relationship(string exp)
+{
+    vector<string> exp_list = string_to_list(exp);
+    int operands = 0;
+    int operators = 0;
+    for (int i = 0; i < exp_list.size(); i++)
+    {
+        try
+        {
+            int operand = stoi(exp_list[i]);
+            operands++;
+        }
+        catch (const invalid_argument &e)
+        {
+            if (exp_list[i] != "(" && exp_list[i] != ")")
+            {
+                operators++;
+            }
+        }
+    }
+    operators++; // to make the operators equal to operands
+    if (operators != operands)
+    {
+        cout << "Missing operator/operand...Please try again....." << endl;
+        return false;
+    }
+    return true;
+}
+
 // master function to run all the error handler
 // functions at once
 bool check_input_validity(string exp)
 {
-    return (check_char_validity(exp) && equal_brackets(exp));
+    return (check_symbol_validity(exp) && equal_brackets(exp) && operator_operand_relationship(exp));
 }
