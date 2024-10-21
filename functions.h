@@ -45,9 +45,12 @@ int precedence(string);
 vector<string> string_to_list(string);
 string infix_to_postfix(string);
 
+<<<<<<< HEAD
 // functions to check the type of input
 bool isPrefix(string);
 bool isPostfix(string);
+=======
+>>>>>>> refs/remotes/origin/main
 string detect_input_type(string);
 
 // Error handling functions

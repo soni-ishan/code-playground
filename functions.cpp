@@ -280,6 +280,31 @@ float Tree::evaluate_tree(Node *rootNode)
     }
 }
 
+<<<<<<< HEAD
+=======
+string detect_input_type(string input_exp)
+{
+    // assuming user entered valid prefix/infix/postfix expression as input
+    vector<string> exp_list = string_to_list(input_exp);
+    string operators = "+-*/";
+    size_t isPrefix = operators.find(exp_list[0]);
+    int exp_len = exp_list.size();
+    size_t isPostfix = operators.find(exp_list[exp_len - 1]);
+    if (isPrefix != string::npos)
+    {
+        return "prefix";
+    }
+    else if (isPostfix != string::npos)
+    {
+        return "postfix";
+    }
+    else
+    {
+        return "infix";
+    }
+}
+
+>>>>>>> refs/remotes/origin/main
 // To check if the input characters are valid
 bool check_symbol_validity(string exp)
 {
