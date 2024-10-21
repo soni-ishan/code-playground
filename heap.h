@@ -3,52 +3,31 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
-// const int MAX_LENGTH = 1000;
-
-class Node
-{
-private:
-    int element;
-    Node *left_child;
-    Node *right_child;
-
-public:
-    Node();
-    Node(int);
-    int getElement();
-};
+const int MAX_SIZE = 1000;
 
 class Heap
 {
 private:
-    Node *root;
-
+    int heap[MAX_SIZE];
+    int heap_length;
 public:
     void buildHeap(string);
+    void TrickleDown(int);
+    void TrickleDownMin(int);
+    void TrickleDownMax(int);
     int findMin();
     int findMax();
     void insertHeap(int);
     void deleteMin();
     void deleteMax();
-    bool duplicateElement(int);
 };
 
-// class Heap
-// {
-// private:
-//     int* heap[MAX_LENGTH];
-//     int heap_length;
-// public:
-//     void buildHeap(string);
-//     int findMin();
-//     int findMax();
-//     void insertHeap(int);
-//     void deleteMin();
-//     void deleteMax();
-// };
+vector<int> string_to_list(string);
 
-vector<string> string_to_list(string);
+// error handlers
+bool check_valid_int(int);
 
 #endif
