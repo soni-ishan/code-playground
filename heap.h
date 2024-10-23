@@ -17,28 +17,29 @@ private:
 public:
     bool isFull();
 
-    int getElement(int);
-    int getSmallerChild(int);
-    int getLargerChild(int);
-    int getSmallestDescendent(int);
-    int getLargestDescendent(int);
-    int getElementLevel(int);
-    int getLevelType(int);
+    // buildHeap and its assisting functions
+    void buildHeap(string);
     bool getDescendentType(int, int);
-
+    int getLevelType(int);
     void TrickleDown(int);
+    int getSmallestDescendent(int);
     void TrickleDownMin(int);
+    int getLargestDescendent(int);
     void TrickleDownMax(int);
 
-    void buildHeap(string);
     void printHeap();
-
-    void compare_parent_child(int);
     void swapElements(int, int);
-    
-    void insertHeap(int);
-    void deleteMin();
+
+    int findMin();
     int findMax();
+
+    void insertHeap(int);
+    void BubbleUp(int);
+    void BubbleUpMin(int);
+    void BubbleUpMax(int);
+
+    void deleteMin();
+    void deleteMax();
 };
 
 // vector functions

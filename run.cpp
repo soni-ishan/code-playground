@@ -7,5 +7,7 @@ int main()
     Heap my_heap;
     my_heap.buildHeap(input);
     my_heap.printHeap();
+    my_heap.insertHeap(81);
+    my_heap.printHeap();
     return 0;
 }
