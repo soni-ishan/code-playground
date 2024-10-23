@@ -6,28 +6,43 @@
 #include <cmath>
 using namespace std;
 
-const int MAX_SIZE = 1000;
+const int MAX_LENGTH = 1000;
 
 class Heap
 {
 private:
-    int heap[MAX_SIZE];
-    int heap_length;
+    int heap[MAX_LENGTH];
+    int curr_size;
+
 public:
-    void buildHeap(string);
+    bool isFull();
+
+    int getElement(int);
+    int getSmallerChild(int);
+    int getLargerChild(int);
+    int getSmallestDescendent(int);
+    int getLargestDescendent(int);
+    int getElementLevel(int);
+    int getLevelType(int);
+    bool getDescendentType(int, int);
+
     void TrickleDown(int);
     void TrickleDownMin(int);
     void TrickleDownMax(int);
-    int findMin();
-    int findMax();
+
+    void buildHeap(string);
+    void printHeap();
+
+    void compare_parent_child(int);
+    void swapElements(int, int);
+    
     void insertHeap(int);
     void deleteMin();
-    void deleteMax();
+    int findMax();
 };
 
+// vector functions
 vector<int> string_to_list(string);
-
-// error handlers
-bool check_valid_int(int);
+void print_vector(vector<int>);
 
 #endif

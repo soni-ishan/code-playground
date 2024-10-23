@@ -1,10 +1,11 @@
-// #include "heap.h"
-#include <iostream>
-#include <cmath>
-using namespace std;
+#include "heap.h"
 
 int main()
 {
-    cout << int(log2(9)) << endl;
+    string input;
+    getline(cin, input);
+    Heap my_heap;
+    my_heap.buildHeap(input);
+    my_heap.printHeap();
     return 0;
 }
