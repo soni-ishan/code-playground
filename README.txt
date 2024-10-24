@@ -14,6 +14,7 @@ Assignment #: 2
     heap.h - declare the heap class and additional non-member functions
 * Implementation Files (.cpp): <Include all implementation files with a brief description of each>
     heap.cpp - function definitions
+    run.cpp - main program file
 * Makefile
 * A screenshot showing your command line for execution and the execution results for 5 different
 examples.
@@ -23,6 +24,7 @@ examples.
 * C++ standard library (<iostream>, <array>, <stack>, ...)
     <iostream>
     <vector>
+    <cmath>
 * C++ external libraries
 
 ......................................................................

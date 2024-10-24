@@ -20,7 +20,7 @@ public:
     // buildHeap and its assisting functions
     void buildHeap(string);
     bool getDescendentType(int, int);
-    int getLevelType(int);
+    bool getLevelType(int);
     void TrickleDown(int);
     int getSmallestDescendent(int);
     void TrickleDownMin(int);

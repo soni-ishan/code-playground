@@ -32,7 +32,7 @@ bool Heap::getDescendentType(int index, int descendent_index)
     // if false then element is grandchild
 }
 
-int Heap::getLevelType(int index)
+bool Heap::getLevelType(int index)
 {
     int level = log2(index);
     return (level % 2 == 0);
@@ -285,17 +285,16 @@ void Heap::BubbleUp(int index)
     {
         int parent_index = index / 2;
         // if index is on min level
-        if (getLevelType(index) == 1)
+        if (getLevelType(index))
         {
             if (heap[index] > heap[parent_index])
             {
                 swapElements(parent_index, index);
-                cout << "1swapped " << heap[index] << " and " << heap[parent_index] << endl;
                 BubbleUpMax(parent_index);
             }
             else
             {
-                BubbleUpMin(parent_index);
+                BubbleUpMin(index);
             }
         }
         // if index is on max level
@@ -304,12 +303,11 @@ void Heap::BubbleUp(int index)
             if (heap[index] < heap[parent_index])
             {
                 swapElements(parent_index, index);
-                cout << "2swapped " << heap[index] << " and " << heap[parent_index] << endl;
                 BubbleUpMin(parent_index);
             }
             else
             {
-                BubbleUpMax(parent_index);
+                BubbleUpMax(index);
             }
         }
     }
@@ -325,7 +323,6 @@ void Heap::BubbleUpMin(int index)
         if (heap[index] < heap[grandparent_index])
         {
             swapElements(grandparent_index, index);
-            cout << "3swapped " << heap[index] << " and " << heap[grandparent_index] << endl;
             BubbleUpMin(grandparent_index);
         }
     }
@@ -340,7 +337,6 @@ void Heap::BubbleUpMax(int index)
         if (heap[index] > heap[grandparent_index])
         {
             swapElements(grandparent_index, index);
-            cout << "4swapped " << heap[index] << " and " << heap[grandparent_index] << endl;
             BubbleUpMax(grandparent_index);
         }
     }
