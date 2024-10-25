@@ -38,11 +38,18 @@ examples.
 
 4- Input requirements - format of the input string:
  To assist your TA in running your code, specify the accepted format(s) of input strings your code will process.
+ String of positive numbers separated by a whitespace
+ Sample input: "8 71 41 31 10 11 16 46 51 31 21 13"
 
 ......................................................................
 
 5- Program Description
  * Briefly explain the goal and functionality of  your program.
+ The goal of this program is to use an array to represent the min-max heap structure and implement the following operations:
+    1. buildHeap : Builds a min-max heap from a list of naturals read from standard input.
+    2. findMin and findMax : Returns the minimum (resp the maximum) element.
+    3. insertHeap : Inserts a new element into the min-max heap.
+    4. deleteMin and deleteMax : Deletes the minimum (resp the maximum) elemen
 
 .....................................................................
 

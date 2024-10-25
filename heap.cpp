@@ -285,7 +285,7 @@ void Heap::BubbleUp(int index)
         // if index is on min level
         if (getLevelType(index))
         {
-            if (heap[index] > heap[parent_index])
+            if (index > 1 && heap[index] > heap[parent_index])
             {
                 swapElements(parent_index, index);
                 BubbleUpMax(parent_index);
@@ -298,7 +298,7 @@ void Heap::BubbleUp(int index)
         // if index is on max level
         else
         {
-            if (heap[index] < heap[parent_index])
+            if (index > 1 && heap[index] < heap[parent_index])
             {
                 swapElements(parent_index, index);
                 BubbleUpMin(parent_index);
@@ -375,7 +375,7 @@ void Heap::deleteMin()
     int min_element_index = 1;
     heap[min_element_index] = heap[curr_size];
     curr_size--;
-    if (min_element_index < curr_size)
+    if (min_element_index < curr_size && curr_size > 0)
     {
         TrickleDown(min_element_index);
     }

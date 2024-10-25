@@ -7,7 +7,7 @@ int main()
     getline(cin, input);
     Heap my_heap;
     my_heap.buildHeap(input);
-    cout << "Heap: " << endl;
+    cout << "Heap: ";
     my_heap.printHeap();
     int choice = 0;
     do
@@ -25,20 +25,20 @@ int main()
         {
         case 1:
             int new_element;
-            cout << "Enter a positive number to insert: " << endl;
+            cout << "Enter a positive number to insert: ";
             cin >> new_element;
             try
             {
                 if (new_element > 0)
                 {
                     my_heap.insertHeap(new_element);
-                    cout << "Invalid element" << endl;
                 }
             }
             catch (const invalid_argument &e)
             {
                 cout << "Invalid element" << endl;
             }
+            my_heap.printHeap();
             break;
         case 2:
             my_heap.deleteMin();
