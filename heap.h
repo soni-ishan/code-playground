@@ -16,28 +16,32 @@ private:
 
 public:
     bool isFull();
-
-    // buildHeap and its assisting functions
-    void buildHeap(string);
-    bool getDescendentType(int, int);
-    bool getLevelType(int);
-    void TrickleDown(int);
-    int getSmallestDescendent(int);
-    void TrickleDownMin(int);
-    int getLargestDescendent(int);
-    void TrickleDownMax(int);
-
     void printHeap();
     void swapElements(int, int);
 
-    int findMin();
-    int findMax();
+    // getter functions
+    bool getLevelType(int);
+    bool getDescendentType(int, int);
+    int getSmallestDescendent(int);
+    int getLargestDescendent(int);
 
+    // buildHeap and its assisting functions
+    void buildHeap(string);
+    void TrickleDown(int);
+    void TrickleDownMin(int);
+    void TrickleDownMax(int);
+
+    // insertHeap and its assisting functions
     void insertHeap(int);
     void BubbleUp(int);
     void BubbleUpMin(int);
     void BubbleUpMax(int);
 
+    // find functions
+    int findMin();
+    int findMax();
+
+    // delete functions
     void deleteMin();
     void deleteMax();
 };

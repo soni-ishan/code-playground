@@ -2,34 +2,23 @@
 
 bool Heap::isFull()
 {
-    return (curr_size == MAX_LENGTH);
+    return (curr_size == MAX_LENGTH - 1);
 }
 
-void Heap::buildHeap(string input)
+void Heap::printHeap()
 {
-    curr_size = 0;
-    vector<int> element_list = string_to_list(input);
-
-    // first put all the input elements into the heap array
-    for (int i = 0; i < element_list.size(); i++)
+    for (int i = 1; i <= curr_size; i++)
     {
-        curr_size++;
-        heap[curr_size] = element_list[i];
+        cout << heap[i] << " ";
     }
-
-    // run TrickleDown function to arrange the elements in a min max heap
-    for (int i = curr_size / 2; i > 0; i--)
-    {
-        TrickleDown(i);
-    }
+    cout << endl;
 }
 
-bool Heap::getDescendentType(int index, int descendent_index)
+void Heap::swapElements(int parent_index, int child_index)
 {
-    // assuming we know that element at descendent_index is either child or grandchild of element at index
-    return (descendent_index <= 2 * index + 1);
-    // if true then element is child
-    // if false then element is grandchild
+    int temp = heap[parent_index];
+    heap[parent_index] = heap[child_index];
+    heap[child_index] = temp;
 }
 
 bool Heap::getLevelType(int index)
@@ -40,18 +29,12 @@ bool Heap::getLevelType(int index)
     // false(0) for odd(max) levels
 }
 
-void Heap::TrickleDown(int index)
+bool Heap::getDescendentType(int index, int descendent_index)
 {
-    // if index is on min level
-    if (getLevelType(index))
-    {
-        TrickleDownMin(index);
-    }
-    // if index is on max level
-    else
-    {
-        TrickleDownMax(index);
-    }
+    // assuming we know that element at descendent_index is either child or grandchild of element at index
+    return (descendent_index <= 2 * index + 1);
+    // if true then element is child
+    // if false then element is grandchild
 }
 
 int Heap::getSmallestDescendent(int index)
@@ -60,6 +43,11 @@ int Heap::getSmallestDescendent(int index)
 
     // get indexes of children
     int left_child_index = 2 * index;
+    if (left_child_index > curr_size)
+    {
+        return -1;
+    }
+
     int right_child_index = 2 * index + 1;
 
     // get indexes of children of left child
@@ -114,43 +102,17 @@ int Heap::getSmallestDescendent(int index)
     return smallest_descendent_index;
 }
 
-void Heap::TrickleDownMin(int index)
-{
-    // if element at index has children
-    if (index <= curr_size / 2)
-    {
-        // get the index of the smallest of the children and grandchildren (if any)
-        int smallest_descendent_index = getSmallestDescendent(index);
-        // if smallest descendent is the grandchild of index element
-        if (getDescendentType(index, smallest_descendent_index) == false)
-        {
-            if (heap[smallest_descendent_index] < heap[index])
-            {
-                swapElements(index, smallest_descendent_index);
-                if (heap[smallest_descendent_index] > heap[smallest_descendent_index / 2])
-                {
-                    swapElements(smallest_descendent_index / 2, smallest_descendent_index);
-                }
-                TrickleDownMin(smallest_descendent_index);
-            }
-        }
-        // if smallest element is the child of index element
-        else
-        {
-            if (heap[smallest_descendent_index] < heap[index])
-            {
-                swapElements(index, smallest_descendent_index);
-            }
-        }
-    }
-}
-
 int Heap::getLargestDescendent(int index)
 {
     // assume element at index has at least one child
 
     // get indexes of children
     int left_child_index = 2 * index;
+    if (left_child_index > curr_size)
+    {
+        return -1;
+    }
+
     int right_child_index = 2 * index + 1;
 
     // get indexes of children of left child
@@ -205,15 +167,79 @@ int Heap::getLargestDescendent(int index)
     return largest_descendent_index;
 }
 
+void Heap::buildHeap(string input)
+{
+    curr_size = 0;
+    vector<int> element_list = string_to_list(input);
+
+    // first put all the input elements into the heap array
+    for (int i = 0; i < element_list.size(); i++)
+    {
+        curr_size++;
+        heap[curr_size] = element_list[i];
+    }
+
+    // run TrickleDown function to arrange the elements in a min max heap
+    for (int i = curr_size / 2; i > 0; i--)
+    {
+        TrickleDown(i);
+    }
+}
+
+void Heap::TrickleDown(int index)
+{
+    // if index is on min level
+    if (getLevelType(index))
+    {
+        TrickleDownMin(index);
+    }
+    // if index is on max level
+    else
+    {
+        TrickleDownMax(index);
+    }
+}
+
+void Heap::TrickleDownMin(int index)
+{
+    // if element at index has children
+    if (index >= 1 && index <= curr_size / 2)
+    {
+        // get the index of the smallest of the children and grandchildren (if any)
+        int smallest_descendent_index = getSmallestDescendent(index);
+        // if smallest descendent is the grandchild of index element
+        if (!getDescendentType(index, smallest_descendent_index))
+        {
+            if (heap[smallest_descendent_index] < heap[index])
+            {
+                swapElements(index, smallest_descendent_index);
+                if (heap[smallest_descendent_index] > heap[smallest_descendent_index / 2])
+                {
+                    swapElements(smallest_descendent_index / 2, smallest_descendent_index);
+                }
+                TrickleDownMin(smallest_descendent_index);
+            }
+        }
+        // if smallest element is the child of index element
+        else
+        {
+            if (heap[smallest_descendent_index] < heap[index])
+            {
+                swapElements(index, smallest_descendent_index);
+            }
+        }
+    }
+}
+
 void Heap::TrickleDownMax(int index)
 {
     // if element at index has children
-    if (index <= curr_size / 2)
+    if (index >= 1 && index <= curr_size / 2)
     {
         // get the index of the largest of the children and grandchildren (if any)
         int largest_descendent_index = getLargestDescendent(index);
         // if largest descendent is the grandchild of index element
-        if (getDescendentType(index, largest_descendent_index) == false)
+        if (!getDescendentType(index, largest_descendent_index))
         {
             if (heap[largest_descendent_index] > heap[index])
             {
@@ -236,34 +262,6 @@ void Heap::TrickleDownMax(int index)
     }
 }
 
-void Heap::printHeap()
-{
-    for (int i = 1; i <= curr_size; i++)
-    {
-        cout << heap[i] << " ";
-    }
-    cout << endl;
-}
-
-void Heap::swapElements(int parent_index, int child_index)
-{
-    int temp = heap[parent_index];
-    heap[parent_index] = heap[child_index];
-    heap[child_index] = temp;
-}
-
-int Heap::findMin()
-{
-    // first element is the miminum in a min max heap
-    return heap[1];
-}
-
-int Heap::findMax()
-{
-    // one of the children of the root element is the maximum in a min max heap
-    return max(heap[2], heap[3]);
-}
-
 void Heap::insertHeap(int new_element)
 {
     if (isFull())
@@ -281,9 +279,9 @@ void Heap::insertHeap(int new_element)
 void Heap::BubbleUp(int index)
 {
     // if index is not on the root
-    if (index != 1)
+    if (index > 1)
     {
-        int parent_index = index / 2;
+        int parent_index = floor(index / 2);
         // if index is on min level
         if (getLevelType(index))
         {
@@ -315,10 +313,9 @@ void Heap::BubbleUp(int index)
 
 void Heap::BubbleUpMin(int index)
 {
-    int grandparent_index = index / 4;
-    cout << "gp = " << grandparent_index << endl;
+    int grandparent_index = floor(index / 4);
     // if grandparent exists
-    if (grandparent_index >= 1)
+    if (grandparent_index)
     {
         if (heap[index] < heap[grandparent_index])
         {
@@ -330,14 +327,82 @@ void Heap::BubbleUpMin(int index)
 
 void Heap::BubbleUpMax(int index)
 {
-    int grandparent_index = index / 4;
+    int grandparent_index = floor(index / 4);
     // if grandparent exists
-    if (grandparent_index >= 1)
+    if (grandparent_index)
     {
         if (heap[index] > heap[grandparent_index])
         {
             swapElements(grandparent_index, index);
             BubbleUpMax(grandparent_index);
+        }
+    }
+}
+
+int Heap::findMin()
+{
+    if (curr_size == 0)
+    {
+        cout << "Heap Underflow" << endl;
+        return -1;
+    }
+    // first element is the miminum in a min max heap
+    return heap[1];
+}
+
+int Heap::findMax()
+{
+    if (curr_size < 2)
+    {
+        cout << "Heap Underflow" << endl;
+        return -1;
+    }
+    else if (curr_size > 2)
+    {
+        // one of the children of the root element is the maximum in a min max heap
+        return max(heap[2], heap[3]);
+    }
+    return heap[2];
+}
+
+void Heap::deleteMin()
+{
+    if (curr_size == 0)
+    {
+        cout << "Heap Underflow" << endl;
+        return;
+    }
+    int min_element_index = 1;
+    heap[min_element_index] = heap[curr_size];
+    curr_size--;
+    if (min_element_index < curr_size)
+    {
+        TrickleDown(min_element_index);
+    }
+}
+
+void Heap::deleteMax()
+{
+    if (curr_size < 2)
+    {
+        cout << "Heap Underflow" << endl;
+    }
+    else if (curr_size == 2)
+    {
+        curr_size--;
+    }
+    else
+    {
+        int max_element_index = 2;
+        if (heap[max_element_index] < heap[3])
+        {
+            max_element_index = 3;
+        }
+        heap[max_element_index] = heap[curr_size];
+        curr_size--;
+        if (max_element_index < curr_size)
+        {
+            TrickleDown(max_element_index);
         }
     }
 }
